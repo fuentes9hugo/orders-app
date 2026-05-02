@@ -1,3 +1,5 @@
+<!-- TODO: ERROR MESSAGE -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,8 +31,13 @@
         <div class="card p-2" style="width: 18rem;">
         <img src="./static/img/room.png" class="rounded-1" alt="Hotel room">
             <div class="card-body">
-                <h3>HAZ TU RESERVA</h3>
-                <form method="POST" action="">
+                <h3 class="text-center fs-4">HAZ TU RESERVA</h3>
+                <?php if ($_SESSION["flash"]): ?>
+                    <p class="text-danger">
+                        <?= $_SESSION["flash"] ?>
+                    </p>
+                <?php endif ?>
+                <form method="POST" action="order.php">
                     <div class="row">
                         <div class="col">
                             <label for="name" class="form-label">Nombre</label>
@@ -58,6 +65,11 @@
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="mt-3 row">
+                        <div class="col d-grid">
+                            <button type="submit" class="btn btn-primary ">RESERVA</button>
                         </div>
                     </div>
                 </form>
