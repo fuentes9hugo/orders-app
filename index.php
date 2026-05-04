@@ -1,4 +1,6 @@
-<!-- TODO: ERROR MESSAGE -->
+<?php
+session_start(); // 1. INICIAR LA SESIÓN AQUÍ
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -21,9 +23,6 @@
     crossorigin="anonymous"
     ></script>
 
-    <!-- Static Content -->
-    <link rel="stylesheet" href="./static/css/styles.css">
-
 <title>Orders App</title>
 </head>
 <body>
@@ -32,34 +31,35 @@
         <img src="./static/img/room.png" class="rounded-1" alt="Hotel room">
             <div class="card-body">
                 <h3 class="text-center fs-4">HAZ TU RESERVA</h3>
-                <?php if ($_SESSION["flash"]): ?>
+                <?php if (isset($_SESSION["flash"])): ?>
                     <p class="text-danger">
                         <?= $_SESSION["flash"] ?>
                     </p>
+                    <?php unset($_SESSION["flash"]); ?>
                 <?php endif ?>
                 <form method="POST" action="order.php">
                     <div class="row">
                         <div class="col">
                             <label for="name" class="form-label">Nombre</label>
-                            <input id="name" type="text" class="form-control" name="name" required autocomplete="name" autofocus>
+                            <input id="name" type="text" class="form-control" name="name" autocomplete="name" autofocus>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="last_name" class="form-label">Apellidos</label>
-                            <input id="last_name" type="text" class="form-control" name="last_name" required autocomplete="last_name">
+                            <input id="last_name" type="text" class="form-control" name="last_name" autocomplete="last_name">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="email" class="form-label">E-mail</label>
-                            <input id="email" type="text" class="form-control" name="email" required autocomplete="email">
+                            <input id="email" type="text" class="form-control" name="email" autocomplete="email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="orders_amount" class="form-label">Cantidad</label>
-                            <select id="orders_amount" class="form-select" name="orders_amount" required>
+                            <select id="orders_amount" class="form-select" name="orders_amount">
                                 <option selected>Seleccionar...</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>

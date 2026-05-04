@@ -7,10 +7,15 @@ session_start();
 $error = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $statement = $conn->prepare("SELECT * FROM users WHERE email = :email LIMIT 1");
+    $statement->execute([":email" => $_POST["email"]]);
+    
     if (empty($_POST["email"]) || empty($_POST["name"]) || empty($_POST["last_name"]) || empty($_POST["orders_amount"])) {
-        $error = "Please fill all the fields.";
+        $error = "Por favor, rellena todos los campos.";
     } else if ($_POST["orders_amount"] < 1 || $_POST["orders_amount"] > 3) {
-        $error = "Orders must be between 1 and 3.";
+        $error = "La cantidad de reservas debe estar entre 1 y 3.";
+    } else if ($statement->rowCount() == 1) {
+        $error = "El email ya tiene una reserva.";
     } else {
         $statement = $conn->prepare("INSERT INTO users (email, name, last_name, orders_amount) VALUES (:email, :name, :last_name, :orders_amount)");
         $statement->execute([
